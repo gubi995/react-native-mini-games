@@ -4,18 +4,19 @@ import { Icon, Divider } from 'react-native-elements';
 
 const Banner = () => (
   <View style={styles.banner}>
-    <Icon reverse name="logo-game-controller-a" type="ionicon" size={100} />
-    <Text style={styles.bannerText}>Play together</Text>
+    <Icon reverse name="logo-game-controller-a" type="ionicon" size={90} />
+    <Text style={{ color: 'white', fontSize: 30 }}>Mini games!</Text>
+    <Text style={{ color: 'white', fontSize: 18 }}>Play together</Text>
   </View>
 );
 
 const DividerDecoration = () => {
-  const colors = ['yellow', 'orange', 'red', 'crimson', 'purple', 'blue'];
+  const colors = ['yellow', 'orange', 'red', 'crimson', 'purple', 'darkblue'];
 
   return (
     <View style={{ flexBasis: '10%' }}>
       {colors.map((color) => (
-        <Divider style={{ backgroundColor: color, flexGrow: 1 }} />
+        <Divider key={color} style={{ backgroundColor: color, flexGrow: 1 }} />
       ))}
     </View>
   );
@@ -46,10 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexBasis: '55%',
     marginTop: 25,
-  },
-  bannerText: {
-    color: 'white',
-    fontSize: 30,
   },
   buttonContainer: {
     justifyContent: 'center',
