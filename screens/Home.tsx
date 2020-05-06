@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, StatusBar } from 'react-native';
 import { Icon, Divider } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 const Banner = () => (
   <View style={styles.banner}>
@@ -22,17 +23,22 @@ const DividerDecoration = () => {
   );
 };
 
-const ButtonContainer = () => (
-  <View style={styles.buttonContainer}>
-    <TouchableHighlight onPress={() => {}} activeOpacity={0.9} underlayColor="#fff">
-      <Icon reverse raised name="md-play" type="ionicon" color="crimson" size={40} />
-    </TouchableHighlight>
-  </View>
-);
+const ButtonContainer = () => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={() => navigation.navigate('Games')} activeOpacity={0.9}>
+        <Icon reverse raised name="md-play" type="ionicon" color="crimson" size={40} />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const Home = () => {
   return (
     <View>
+      <StatusBar backgroundColor="black" />
       <Banner />
       <DividerDecoration />
       <ButtonContainer />
@@ -46,7 +52,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexBasis: '55%',
-    marginTop: 25,
   },
   buttonContainer: {
     justifyContent: 'center',
