@@ -35,7 +35,7 @@ const ButtonContainer = () => {
   );
 };
 
-const Home = () => {
+const HomeScreen = () => {
   return (
     <View>
       <StatusBar backgroundColor="black" />
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default HomeScreen;

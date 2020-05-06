@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 
 import BottomMenu from '../components/BottomMenu/Menu';
 
-const Games = () => {
+const GamesScreen = () => {
   return (
     <View style={styles.root}>
       <ScrollView>
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Games;
+export default GamesScreen;
