@@ -1,10 +1,13 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 import BottomMenu from '../components/BottomMenu/Menu';
 
 const GamesScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.root}>
       <ScrollView>
@@ -13,6 +16,7 @@ const GamesScreen = () => {
           title="TIC TAC TOE"
           buttonStyle={{ height: 150, backgroundColor: 'crimson' }}
           containerStyle={{ margin: 10 }}
+          onPress={() => navigation.navigate('TicTacToe')}
         />
         <Button
           raised
