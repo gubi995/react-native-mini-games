@@ -1,15 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import { useTicTacToeStore, useTicTacToeDispatch } from './useTicTacToe';
 import { setBoard, nextTurn } from './actions';
 import { selectIsXPlayerActive } from './selectors';
-import useTicTacToe from './useTicTacToe';
 import Tile from './Tile';
 
 const Board = () => {
   const { width } = useWindowDimensions();
-  const { state, dispatch } = useTicTacToe();
-  const { board, winner } = state;
+  const store = useTicTacToeStore();
+  const dispatch = useTicTacToeDispatch();
+  const { board, winner } = store;
 
   const isDisabled = (tileText: string) => {
     return Boolean(tileText) || Boolean(winner);
@@ -19,7 +20,7 @@ const Board = () => {
     const isTileEmpty = !Boolean(board[index]);
 
     if (isTileEmpty) {
-      board[index] = selectIsXPlayerActive(state) ? 'X' : 'O';
+      board[index] = selectIsXPlayerActive(store) ? 'X' : 'O';
       dispatch(setBoard(board));
       dispatch(nextTurn());
     }

@@ -1,21 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import useTicTacToe from './useTicTacToe';
 import { newGame, rematch } from './actions';
+import { useTicTacToeDispatch, useTicTacToeStore } from './useTicTacToe';
 import GamePopupButton from './GamePopupButton';
 
 const GamePopup = () => {
   const navigation = useNavigation();
-  const { dispatch } = useTicTacToe();
+  const dispatch = useTicTacToeDispatch();
+  const store = useTicTacToeStore();
+  const { winner, isDraw } = store;
+  const isGameEnded = winner || isDraw;
 
-  return (
+  return isGameEnded ? (
     <View style={[StyleSheet.absoluteFill, styles.container]}>
       <GamePopupButton text="Rematch" onPress={() => dispatch(rematch())} />
       <GamePopupButton text="New Game" onPress={() => dispatch(newGame())} />
       <GamePopupButton text="Pick other game" onPress={() => navigation.navigate('Games')} />
     </View>
+  ) : (
+    <></>
   );
 };
 

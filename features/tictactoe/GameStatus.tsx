@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import useTicTacToe from './useTicTacToe';
+
+import { useTicTacToeStore } from './useTicTacToe';
 
 const GameStatus = () => {
-  const { state } = useTicTacToe();
-  const { players } = state;
+  const store = useTicTacToeStore();
+  const { players } = store;
   const [xPlayer, oPlayer] = players;
 
   return (

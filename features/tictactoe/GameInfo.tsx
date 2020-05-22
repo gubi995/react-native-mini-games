@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useTicTacToeStore } from './useTicTacToe';
 import { selectIsXPlayerActive } from './selectors';
-import useTicTacToe from './useTicTacToe';
 
 const GameInfo = () => {
-  const { state } = useTicTacToe();
+  const store = useTicTacToeStore();
 
   const createInfo = () => {
-    const { winner, isDraw, players } = state;
+    const { winner, isDraw, players } = store;
     const [xPlayer, oPlayer] = players;
 
     if (winner) {
@@ -19,7 +19,7 @@ const GameInfo = () => {
       return 'Draw';
     }
 
-    return `${selectIsXPlayerActive(state) ? xPlayer.name : oPlayer.name} pick`;
+    return `${selectIsXPlayerActive(store) ? xPlayer.name : oPlayer.name} pick`;
   };
 
   return (

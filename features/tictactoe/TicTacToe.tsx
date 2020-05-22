@@ -1,39 +1,28 @@
-import React, { useReducer, useCallback } from 'react';
+import React from 'react';
 import { View } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
 
-import { reducer, initialState } from './reducer';
-import { newGame } from './actions';
-import TicTacToeContext from './TicTacToeContext';
+import { TicTacToeProvider } from './useTicTacToe';
 import GameStatus from './GameStatus';
 import Board from './Board';
 import GameInfo from './GameInfo';
 import GamePopup from './GamePopup';
+import NewGame from './NewGame';
 
 const TicTacToe = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { winner, isDraw } = state;
-  const isGameEnded = winner || isDraw;
-
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(newGame());
-    }, [])
-  );
-
   return (
-    <TicTacToeContext.Provider value={{ state, dispatch }}>
+    <TicTacToeProvider>
       <View
         style={{
           flex: 1,
         }}
       >
+        <NewGame />
         <GameInfo />
         <Board />
         <GameStatus />
-        {isGameEnded && <GamePopup />}
+        <GamePopup />
       </View>
-    </TicTacToeContext.Provider>
+    </TicTacToeProvider>
   );
 };
 
