@@ -23,6 +23,7 @@ const GamesScreen = () => {
           title="HANGMAN"
           buttonStyle={{ height: 150, backgroundColor: 'crimson' }}
           containerStyle={{ margin: 10 }}
+          onPress={() => navigation.navigate('Hangman')}
         />
         <Button
           raised
