@@ -1,11 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useHangmanStore } from './useHangMan';
+
 const UsedLetterSection = () => {
+  const { wrongAttempts } = useHangmanStore();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Missed</Text>
-      <Text style={styles.missedLetters}>A, B, C, D, F</Text>
+      <Text style={styles.missedLetters}>{wrongAttempts.join(', ')}</Text>
     </View>
   );
 };

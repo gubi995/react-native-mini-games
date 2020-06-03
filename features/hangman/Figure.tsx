@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, Text, useWindowDimensions } from 'react-native';
+import { useHangmanStore } from './useHangMan';
 
 const TopPicket = () => {
   const { width } = useWindowDimensions();
@@ -62,18 +63,21 @@ const RightLeg = () => {
 };
 
 const Figure = () => {
+  const { wrongAttempts } = useHangmanStore();
+  const attemptCount = wrongAttempts.length;
+
   return (
     <View style={styles.container}>
       <TopPicket />
       <Rope />
       <RightPicket />
       <BottomPicket />
-      <Head />
-      <Torso />
-      <LeftHand />
-      <RightHand />
-      <LeftLeg />
-      <RightLeg />
+      {attemptCount > 0 && <Head />}
+      {attemptCount > 1 && <Torso />}
+      {attemptCount > 2 && <LeftHand />}
+      {attemptCount > 3 && <RightHand />}
+      {attemptCount > 4 && <LeftLeg />}
+      {attemptCount > 5 && <RightLeg />}
     </View>
   );
 };

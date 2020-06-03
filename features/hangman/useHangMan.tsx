@@ -1,8 +1,8 @@
 import React, { useReducer, Dispatch } from 'react';
 
-import { reducer, initialState, State } from './reducer';
-import { ActionType } from './actions';
 import { useProvidedContext } from '../../shared/useProvidedContext';
+import { State, reducer, initialState } from './reducers';
+import { ActionType } from './actions';
 
 const storeContext = React.createContext({} as State);
 const dispatchContext = React.createContext({} as Dispatch<ActionType>);
@@ -11,7 +11,7 @@ interface Props {
   children: React.ReactNode | React.ReactNode[];
 }
 
-export const TicTacToeProvider: React.FC<Props> = ({ children }) => {
+export const HangmanProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
@@ -21,6 +21,6 @@ export const TicTacToeProvider: React.FC<Props> = ({ children }) => {
   );
 };
 
-export const useTicTacToeStore = () => useProvidedContext(storeContext);
+export const useHangmanStore = () => useProvidedContext(storeContext);
 
-export const useTicTacToeDispatch = () => useProvidedContext(dispatchContext);
+export const useHangmanDispatch = () => useProvidedContext(dispatchContext);

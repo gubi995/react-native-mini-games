@@ -3,13 +3,16 @@ import { View, StyleSheet } from 'react-native';
 
 import Figure from './Figure';
 import GameControl from './GameControl';
+import { HangmanProvider } from './useHangMan';
 
 const Hangman = () => {
   return (
-    <View style={styles.container}>
-      <Figure />
-      <GameControl />
-    </View>
+    <HangmanProvider>
+      <View style={styles.container}>
+        <Figure />
+        <GameControl />
+      </View>
+    </HangmanProvider>
   );
 };
 
