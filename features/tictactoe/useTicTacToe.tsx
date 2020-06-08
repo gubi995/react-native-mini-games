@@ -1,26 +1,7 @@
-import React, { useReducer, Dispatch } from 'react';
-
 import { reducer, initialState, State } from './reducer';
 import { ActionType } from './actions';
-import { useProvidedContext } from '../../shared/useProvidedContext';
+import makeStore from '../../shared/makeStore';
 
-const storeContext = React.createContext({} as State);
-const dispatchContext = React.createContext({} as Dispatch<ActionType>);
+const { StoreProvider, useDispatch, useStore } = makeStore<State, ActionType>(reducer, initialState);
 
-interface Props {
-  children: React.ReactNode | React.ReactNode[];
-}
-
-export const TicTacToeProvider: React.FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  return (
-    <storeContext.Provider value={state}>
-      <dispatchContext.Provider value={dispatch}>{children}</dispatchContext.Provider>
-    </storeContext.Provider>
-  );
-};
-
-export const useTicTacToeStore = () => useProvidedContext(storeContext);
-
-export const useTicTacToeDispatch = () => useProvidedContext(dispatchContext);
+export { StoreProvider as TicTacToeProvider, useDispatch as useTicTacToeDispatch, useStore as useTicTacToeStore };

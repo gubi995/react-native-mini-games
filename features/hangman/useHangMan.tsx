@@ -1,26 +1,7 @@
-import React, { useReducer, Dispatch } from 'react';
-
-import { useProvidedContext } from '../../shared/useProvidedContext';
 import { State, reducer, initialState } from './reducers';
 import { ActionType } from './actions';
+import makeStore from '../../shared/makeStore';
 
-const storeContext = React.createContext({} as State);
-const dispatchContext = React.createContext({} as Dispatch<ActionType>);
+const { StoreProvider, useDispatch, useStore } = makeStore<State, ActionType>(reducer, initialState);
 
-interface Props {
-  children: React.ReactNode | React.ReactNode[];
-}
-
-export const HangmanProvider: React.FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  return (
-    <storeContext.Provider value={state}>
-      <dispatchContext.Provider value={dispatch}>{children}</dispatchContext.Provider>
-    </storeContext.Provider>
-  );
-};
-
-export const useHangmanStore = () => useProvidedContext(storeContext);
-
-export const useHangmanDispatch = () => useProvidedContext(dispatchContext);
+export { StoreProvider as HangmanProvider, useDispatch as useHangmanDispatch, useStore as useHangmanStore };
