@@ -4,7 +4,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 
 import HomeScreen from './screens/HomeScreen';
 import GamesScreen from './screens/GamesScreen';
-import TicTacToe from './features/tictactoe';
+import TicTacToe from './features/tictactoe/TicTacToe';
 import Hangman from './features/hangman/Hangman';
 
 const Stack = createStackNavigator();

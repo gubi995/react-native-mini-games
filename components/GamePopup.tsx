@@ -1,24 +1,46 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 
 interface Props {
   rematch: () => void;
   newGame: () => void;
+  gameInfo: React.ReactNode[] | React.ReactNode;
 }
 
-const GamePopup: React.FC<Props> = ({ rematch, newGame }) => {
+const GamePopup: React.FC<Props> = ({ rematch, newGame, gameInfo }) => {
   const navigation = useNavigation();
 
   return (
     <View style={[StyleSheet.absoluteFill, styles.container]}>
-      <View style={{ flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={styles.text}>Status: In progress</Text>
-        <Text style={styles.text}>Adrian has 2 win</Text>
-        <Text style={styles.text}>Nelli has 3 win</Text>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'black',
+          borderColor: 'black',
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+        }}
+      >
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
+          style={{ marginVertical: 10 }}
+        >
+          {gameInfo}
+        </ScrollView>
+        <Button
+          containerStyle={{ marginBottom: 10 }}
+          type="clear"
+          onPress={() => {}}
+          TouchableComponent={TouchableOpacity}
+          icon={<Icon raised reverse color="crimson" name="ios-arrow-down" type="ionicon" size={20} />}
+        />
       </View>
+
       <View style={{ flex: 1, justifyContent: 'center', marginHorizontal: 10 }}>
         <Button
           title="Rematch"
