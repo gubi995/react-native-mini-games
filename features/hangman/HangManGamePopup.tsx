@@ -1,15 +1,27 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
-
-import { useTicTacToeStore, useTicTacToeDispatch } from './useTicTacToe';
 import GamePopup from '../../components/GamePopup';
+import { useHangmanStore, useHangmanDispatch } from './useHangMan';
+import { FINISHED } from '../../shared/constants';
 import { newGame, rematch } from './actions';
 
-const TicTacToeGamePopup = () => {
-  const { winner, isDraw, players, gameStatus } = useTicTacToeStore();
+export default function HangmanGamePopup() {
+  const { players, gameStatus } = useHangmanStore();
+  const dispatch = useHangmanDispatch();
   const [player1, player2] = players;
-  const dispatch = useTicTacToeDispatch();
-  const isGameEnded = winner || isDraw;
+  const isGameEnded = gameStatus === FINISHED;
+
+  const getGuesser = () => {
+    if (gameStatus === FINISHED) {
+      const notActivePlayerName = player1.isActive ? player2.name : player1.name;
+
+      return `${notActivePlayerName} will guess`;
+    }
+
+    const activePlayerName = player1.isActive ? player1.name : player2.name;
+
+    return `${activePlayerName} is guessing`;
+  };
 
   return isGameEnded ? (
     <GamePopup
@@ -18,6 +30,7 @@ const TicTacToeGamePopup = () => {
       gameInfo={
         <>
           <Text style={styles.text}>{`Game ${gameStatus}`}</Text>
+          <Text style={styles.text}>{getGuesser()}</Text>
           <Text style={styles.text}>{`${player1.name} has ${player1.win} win`}</Text>
           <Text style={styles.text}>{`${player2.name} has ${player2.win} win`}</Text>
         </>
@@ -26,9 +39,7 @@ const TicTacToeGamePopup = () => {
   ) : (
     <></>
   );
-};
-
-export default TicTacToeGamePopup;
+}
 
 const styles = StyleSheet.create({
   text: {

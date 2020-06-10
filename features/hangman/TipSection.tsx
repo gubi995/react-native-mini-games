@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 
 import { useHangmanStore, useHangmanDispatch } from './useHangMan';
-import { guess } from './actions';
+import { guess, checkGameStatus } from './actions';
 
 const TipSection = () => {
   const [tip, setTip] = useState('');
@@ -30,6 +30,7 @@ const TipSection = () => {
       setError('Letter is used already');
     } else {
       dispatch(guess(tip));
+      dispatch(checkGameStatus());
       setTip('');
     }
   };

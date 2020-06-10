@@ -1,23 +1,26 @@
+import { cloneDeep } from 'lodash';
+
 import { SET_BOARD, ActionType, NEXT_TURN, NEW_GAME, REMATCH } from './actions';
 import { checkWinner, checkDraw } from './utils';
-
-import { cloneDeep } from 'lodash';
+import { IN_PROGRESS, FINISHED } from '../../shared/constants';
 
 export interface State {
   board: string[];
-  players: { name: string; win: number; lose: number; isActive: boolean }[];
+  players: { name: string; win: number; isActive: boolean }[];
   winner: string;
   isDraw: boolean;
+  gameStatus: typeof IN_PROGRESS | typeof FINISHED;
 }
 
 export const initialState: State = {
   board: new Array(9).fill(''),
   players: [
-    { name: 'X Player', win: 0, lose: 0, isActive: true },
-    { name: 'O Player', win: 0, lose: 0, isActive: false },
+    { name: 'X Player', win: 0, isActive: true },
+    { name: 'O Player', win: 0, isActive: false },
   ],
   winner: '',
   isDraw: false,
+  gameStatus: IN_PROGRESS,
 };
 
 export const reducer = (state: State, action: ActionType) => {
@@ -29,6 +32,7 @@ export const reducer = (state: State, action: ActionType) => {
       };
     }
     case NEXT_TURN: {
+      let gameStatus = IN_PROGRESS;
       const { board, players } = state;
       const [xPlayer, oPlayer] = players;
       const newXPlayer = { ...xPlayer, isActive: !xPlayer.isActive };
@@ -38,18 +42,17 @@ export const reducer = (state: State, action: ActionType) => {
       const winner = checkWinner(board);
 
       if (winner) {
+        gameStatus = FINISHED;
         const isXPlayerTheWinner = winner === 'X';
 
         if (isXPlayerTheWinner) {
           newXPlayer.win++;
-          newOPlayer.lose++;
         } else {
-          newXPlayer.lose++;
           newOPlayer.win++;
         }
       }
 
-      return { ...state, players: [newXPlayer, newOPlayer], winner: winner || '', isDraw };
+      return { ...state, gameStatus, players: [newXPlayer, newOPlayer], winner: winner || '', isDraw };
     }
 
     case NEW_GAME: {
