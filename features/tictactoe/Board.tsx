@@ -28,7 +28,7 @@ const Board = () => {
 
   return (
     <View style={[styles.board, { width, height: width }]}>
-      {board.map((tileText, index) => (
+      {board.map((tileText: string, index: number) => (
         <Tile key={index} text={tileText} disabled={isDisabled(tileText)} onPress={() => handleTilePress(index)} />
       ))}
     </View>

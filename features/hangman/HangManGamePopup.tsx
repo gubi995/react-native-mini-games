@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import GamePopup from '../../components/GamePopup';
+import InfoButton from '../../components/InfoButton';
 import { useHangmanStore, useHangmanDispatch } from './useHangMan';
 import { FINISHED } from '../../shared/constants';
-import { newGame, rematch } from './actions';
+import { newGame, rematch, ActionType } from './actions';
 
-export default function HangmanGamePopup() {
+const HangmanGamePopup = () => {
+  const [showPopup, setShowPopup] = useState(false);
   const { players, gameStatus } = useHangmanStore();
   const dispatch = useHangmanDispatch();
+  const navigation = useNavigation();
   const [player1, player2] = players;
   const isGameEnded = gameStatus === FINISHED;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <InfoButton onPress={() => setShowPopup((prevState) => !prevState)} />,
+    });
+  }, [navigation]);
+
+  const dispatchAndClosePopup = (action: ActionType) => {
+    dispatch(action);
+    setShowPopup(false);
+  };
 
   const getGuesser = () => {
     if (gameStatus === FINISHED) {
@@ -23,10 +39,10 @@ export default function HangmanGamePopup() {
     return `${activePlayerName} is guessing`;
   };
 
-  return isGameEnded ? (
+  return isGameEnded || showPopup ? (
     <GamePopup
-      newGame={() => dispatch(newGame())}
-      rematch={() => dispatch(rematch())}
+      newGame={() => dispatchAndClosePopup(newGame())}
+      rematch={() => dispatchAndClosePopup(rematch())}
       gameInfo={
         <>
           <Text style={styles.text}>{`Game ${gameStatus}`}</Text>
@@ -39,7 +55,7 @@ export default function HangmanGamePopup() {
   ) : (
     <></>
   );
-}
+};
 
 const styles = StyleSheet.create({
   text: {
@@ -49,3 +65,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default HangmanGamePopup;

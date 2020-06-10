@@ -4,8 +4,8 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 
 import HomeScreen from './screens/HomeScreen';
 import GamesScreen from './screens/GamesScreen';
-import TicTacToe from './features/tictactoe/TicTacToe';
-import Hangman from './features/hangman/Hangman';
+import TicTacToeScreen from './screens/TicTacToeScreen';
+import HangmanScreen from './screens/HangmanScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,9 +22,9 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Games" component={GamesScreen} />
-        <Stack.Screen name="TicTacToe" component={TicTacToe} options={{ headerTitle: 'Tic Tac Toe' }} />
-        <Stack.Screen name="Hangman" component={Hangman} />
+        <Stack.Screen name="Games" component={GamesScreen} options={{ headerLeft: () => null }} />
+        <Stack.Screen name="TicTacToe" component={TicTacToeScreen} options={{ headerTitle: 'Tic Tac Toe' }} />
+        <Stack.Screen name="Hangman" component={HangmanScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,20 +1,35 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useTicTacToeStore, useTicTacToeDispatch } from './useTicTacToe';
 import GamePopup from '../../components/GamePopup';
-import { newGame, rematch } from './actions';
+import { newGame, rematch, ActionType } from './actions';
+import InfoButton from '../../components/InfoButton';
 
 const TicTacToeGamePopup = () => {
+  const [showPopup, setShowPopup] = useState(false);
   const { winner, isDraw, players, gameStatus } = useTicTacToeStore();
-  const [player1, player2] = players;
   const dispatch = useTicTacToeDispatch();
+  const navigation = useNavigation();
+  const [player1, player2] = players;
   const isGameEnded = winner || isDraw;
 
-  return isGameEnded ? (
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <InfoButton onPress={() => setShowPopup((prevState) => !prevState)} />,
+    });
+  }, [navigation]);
+
+  const dispatchAndClosePopup = (action: ActionType) => {
+    dispatch(action);
+    setShowPopup(false);
+  };
+
+  return isGameEnded || showPopup ? (
     <GamePopup
-      newGame={() => dispatch(newGame())}
-      rematch={() => dispatch(rematch())}
+      newGame={() => dispatchAndClosePopup(newGame())}
+      rematch={() => dispatchAndClosePopup(rematch())}
       gameInfo={
         <>
           <Text style={styles.text}>{`Game ${gameStatus}`}</Text>
